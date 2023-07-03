@@ -1,6 +1,6 @@
 package com.sparta.openmind.entity;
 
-public enum UserRoleEnum { //사용자 권한을 관리하는 class
+public enum UserRoleEnum {
     USER(Authority.USER),  // 사용자 권한
     ADMIN(Authority.ADMIN);  // 관리자 권한
 

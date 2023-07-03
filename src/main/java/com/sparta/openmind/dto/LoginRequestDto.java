@@ -1,9 +1,11 @@
 package com.sparta.openmind.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
-public class UserRequestDto {
+public class LoginRequestDto {
     private String username;
     private String password;
 }

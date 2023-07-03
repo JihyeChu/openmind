@@ -1,6 +1,6 @@
 package com.sparta.openmind.entity;
 
-import com.sparta.openmind.dto.UserRequestDto;
+import com.sparta.openmind.entity.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,23 +9,30 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "user")
 @NoArgsConstructor
-public class User{
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username", nullable = false, unique = true)
+
+    @Column(nullable = false, unique = true)
     private String username;
-    @Column(name = "password", nullable = false, length = 12)
+
+    @Column(nullable = false)
     private String password;
 
-    public User(UserRequestDto requestDto) {
-        this.username = requestDto.getUsername();
-        this.password = requestDto.getPassword();
-    }
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    public void update(UserRequestDto requestDto) {
-        this.password = requestDto.getPassword();
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
+    public User(String username, String password, String email, UserRoleEnum role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
     }
 }
