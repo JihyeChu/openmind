@@ -27,6 +27,7 @@ public class UserController {
 
     private final UserService userService;
 
+
     @GetMapping("/user/login-page")
     public String loginPage() {
         return "login";
@@ -36,7 +37,7 @@ public class UserController {
     public String signupPage() {
         return "signup";
     }
-
+    //회원가입구현
     @PostMapping("/user/signup")
     public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
         // Validation 예외처리
