@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/basic.js"></script>
-    <title>나만의 셀렉샵</title>
+    <title>Openmind | 원하는 모임에 참가하세요</title>
 </head>
 <body>
 <div class="header" style="position:relative;">
@@ -23,7 +23,7 @@
         <span id="username"></span> 님의
     </div>
     <div id="header-title-select-shop">
-        Select Shop
+        새로운 소식을 확인하세요!
     </div>
     <a id="login-text" href="javascript:logout()">
         로그아웃
@@ -43,8 +43,9 @@
         정렬:
         <select id="sorting" onchange="showProduct()">
             <option value="id">ID</option>
-            <option value="title">상품명</option>
-            <option value="lprice">최저가</option>
+            <option value="title">제목</option>
+            <option value="username">이름</option>
+            <option value="contents">내용</option>
         </select>
         <input type="radio" name="isAsc" value="true" onchange="showProduct()" checked/> 오름차순
         <input type="radio" name="isAsc" value="false" onchange="showProduct()"/> 내림차순
