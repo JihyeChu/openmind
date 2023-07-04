@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.openmind.dto.LoginRequestDto;
 import com.sparta.openmind.entity.UserRoleEnum;
 import com.sparta.openmind.security.UserDetailsImpl;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
