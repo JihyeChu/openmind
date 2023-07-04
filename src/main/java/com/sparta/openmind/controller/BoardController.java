@@ -30,7 +30,7 @@ public class BoardController {
         return boardService.updateBoard(id,requestDto);
     }
 
-    //작성자글 가지고 오기
+    //회원이름으로 작성글 가지고 오기
     @GetMapping("/boards")
     public List<BoardResponseDto> getBoard(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return boardService.getBoards(userDetails.getUser());
