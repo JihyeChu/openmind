@@ -1,6 +1,5 @@
 package com.sparta.openmind.jwt;
 
-import com.sparta.openmind.security.UserDetailsImpl;
 import com.sparta.openmind.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -13,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,16 +26,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }
+
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain)
+            throws ServletException, IOException {
 
         String tokenValue = jwtUtil.getTokenFromRequest(req);
 
-        if(StringUtils.hasText(tokenValue)) {
-            tokenValue = jwtUtil.substringToken(tokenValue);
-            log.info(tokenValue);
+        if (StringUtils.hasText(tokenValue)) {
 
-            if(!jwtUtil.validateToken(tokenValue)) {
+            if (!jwtUtil.validateToken(tokenValue)) {
                 log.error("Token Error");
                 return;
             }
@@ -50,7 +48,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 return;
             }
         }
-        filterChain.doFilter(req,res);
+        filterChain.doFilter(req, res);
     }
     //인증처리
 

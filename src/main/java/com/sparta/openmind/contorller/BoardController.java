@@ -21,7 +21,7 @@ public class BoardController {
     }
 
     @GetMapping("/board")
-    public String geeBoard(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String getBoard(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         System.out.println("user.getUsername() = " + user.getUsername());
         return "redirect:/";

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/basic.js"></script>
+    <title>나만의 셀렉샵</title>
+</head>
+<body>
+<div class="header" style="position:relative;">
+    <!--headr-->
+    <div id="header-title-login-user">
+        <span id="username"></span> 님의
+    </div>
+    <div id="header-title-select-shop">
+        Select Shop
+    </div>
+    <a id="login-text" href="javascript:logout()">
+        로그아웃
+    </a>
+    <!--/headr-->
+</div>
+<div class="nav">
+    <div class="nav-see active">
+        모아보기
+    </div>
+    <div class="nav-search">
+        탐색하기
+    </div>
+</div>
+<div id="see-area">
+    <div class="pagination">
+        정렬:
+        <select id="sorting" onchange="showProduct()">
+            <option value="id">ID</option>
+            <option value="title">상품명</option>
+            <option value="lprice">최저가</option>
+        </select>
+        <input type="radio" name="isAsc" value="true" onchange="showProduct()" checked/> 오름차순
+        <input type="radio" name="isAsc" value="false" onchange="showProduct()"/> 내림차순
+    </div>
+    <div id="pagination" class="pagination"></div>
+    <br>
+    <div id="product-container">
+
+    </div>
+</div>
+<div id="search-area">
+    <div>
+        <input type="text" id="query">
+    </div>
+    <div id="search-result-box">
+
+    </div>
+    <div id="container" class="popup-container">
+        <div class="popup">
+            <button id="close" class="close">
+                X
+            </button>
+            <h1>⏰최저가 설정하기</h1>
+            <p>최저가를 설정해두면 선택하신 상품의 최저가가 떴을 때<br/> 표시해드려요!</p>
+            <div>
+                <input type="text" id="myprice" placeholder="200,000">원
+            </div>
+            <button class="cta" onclick="setMyprice()">설정하기</button>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="admin"/>
+</body>
+</html>
