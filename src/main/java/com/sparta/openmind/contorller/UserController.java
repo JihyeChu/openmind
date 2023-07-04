@@ -9,11 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping("/api")
+
 public class UserController {
 
     private final UserService userService;
@@ -22,17 +25,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("api/user/login-page")
+    @GetMapping("/user/login-page")
     public String loginPage() {
-        return null;
+        return null; // 로그인을 어디로 반환해야? 프론트가 없는데..
     }
 
-    @GetMapping("api/user/signup")
+    @GetMapping("/user/signup")
     public String signupPage() {
         return null;
     }
 
-    @PostMapping("api/user/signup")
+    @PostMapping("/user/signup")
     public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
         // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
