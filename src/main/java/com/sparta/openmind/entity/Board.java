@@ -26,11 +26,16 @@ public class Board {
     @Column(nullable = false)
     private String contents;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Board(BoardRequestDto requestDto) {
-        this.username =requestDto.getUsername();
+
+    public Board(BoardRequestDto requestDto, User user) {
+        this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+        this.user = user;
 
     }
 
