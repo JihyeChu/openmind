@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //@RestController
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class BoardController {
@@ -31,7 +31,9 @@ public class BoardController {
     //게시글 조회하기
     @GetMapping("/board")
     public List<BoardResponseDto> getBoards(@AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
+        User user = userDetails.getUser();
+        System.out.println("user.getUsername() = " + user.getUsername());
         return boardService.getBoards(userDetails.getUser());
     }
 //    @GetMapping("/board")
