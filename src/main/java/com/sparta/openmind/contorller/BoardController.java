@@ -7,11 +7,13 @@ import com.sparta.openmind.security.UserDetailsImpl;
 import com.sparta.openmind.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class BoardController {
@@ -20,6 +22,7 @@ public class BoardController {
 
     //게시글 등록하기
     @PostMapping("/board")
+    @ResponseBody
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         //응답보내기
         return boardService.createBoard(requestDto, userDetails.getUser());

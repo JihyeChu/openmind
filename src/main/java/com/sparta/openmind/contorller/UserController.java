@@ -1,11 +1,10 @@
 package com.sparta.openmind.contorller;
 
-import com.sparta.openmind.dto.BoardRequestDto;
-import com.sparta.openmind.dto.BoardResponseDto;
 import com.sparta.openmind.dto.SignupRequestDto;
 import com.sparta.openmind.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -14,17 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@RestController
+@Controller
+//@RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
 
     @GetMapping("/user/login-page")
     public String loginPage() {
