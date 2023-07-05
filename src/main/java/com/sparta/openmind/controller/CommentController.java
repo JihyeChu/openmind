@@ -2,6 +2,7 @@ package com.sparta.openmind.controller;
 
 import com.sparta.openmind.dto.CommentRequestDto;
 import com.sparta.openmind.dto.CommentResponseDto;
+import com.sparta.openmind.security.UserDetailsImpl;
 import com.sparta.openmind.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+
 public class CommentController {
 
     // Comment

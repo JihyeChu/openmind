@@ -37,10 +37,11 @@ public class BoardService {
     }
 
 
-    public ResponseEntity<List<BoardResponseDto>> findContentandComment(Integer bno) {
+    public BoardResponseDto findContentandComment(Integer bno) {
 
-        List<BoardResponseDto> list = repository.findByBno(bno);
-        return new ResponseEntity<List<BoardResponseDto>>(list, HttpStatus.OK);
+        Board board = repository.findById(bno).orElseThrow(() ->
+                new IllegalArgumentException("선택한 포스트가 존재하지 않습니다."));
+        return new BoardResponseDto(board);
 
     }
 
@@ -55,16 +56,14 @@ public class BoardService {
     @Transactional
     public void deleteContent(Integer bno, User user) {
 
-        String id = findContent(bno).getUser().getId();
+        String id = findContent(bno).getUser().getUsername();
 
 
-        if (id.equals(user.getId()) || user.getRole().toString().equals("ADMIN")) {
+        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
             repository.deleteById(bno);
         } else {
             System.out.println("삭제할 권한이 없습니다.");
         }
-
-
     }
 
 
@@ -72,9 +71,9 @@ public class BoardService {
     public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {
 
         Board board = findContent(bno);
-        String id = findContent(bno).getUser().getId();
+        String id = findContent(bno).getUser().getUsername();
 
-        if (id.equals(user.getId()) || user.getRole().toString().equals("ADMIN")) {
+        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
             board.update(requestDto);
             return new BoardResponseDto(board);
         } else {

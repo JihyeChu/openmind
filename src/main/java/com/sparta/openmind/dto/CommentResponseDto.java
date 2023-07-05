@@ -23,7 +23,7 @@ public class CommentResponseDto {
         this.cno = comment.getCno();
         this.bno = comment.getBoard().getBno();
         this.comment = comment.getComment();
-        this.commenter = comment.getUser().getId();
+        this.commenter = comment.getUser().getUsername();
         this.createdAt = comment.getCreatedAt();
         this.modifiedAt = comment.getModifiedAt();
     }

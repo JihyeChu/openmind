@@ -25,7 +25,7 @@ public class BoardResponseDto {
         this.bno = board.getBno();
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.writer = board.getUser().getId();
+        this.writer = board.getUser().getUsername();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
         this.commentList = board.getCommentList();
@@ -35,7 +35,7 @@ public class BoardResponseDto {
         this.bno = board.getBno();
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.writer = board.getUser().getId();
+        this.writer = board.getUser().getUsername();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
         this.commentList = commentList;

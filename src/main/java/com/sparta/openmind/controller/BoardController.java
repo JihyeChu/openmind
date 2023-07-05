@@ -4,6 +4,7 @@ import com.sparta.openmind.dto.BoardRequestDto;
 import com.sparta.openmind.dto.BoardResponseDto;
 import com.sparta.openmind.entity.Board;
 import com.sparta.openmind.entity.Comment;
+import com.sparta.openmind.security.UserDetailsImpl;
 import com.sparta.openmind.service.BoardService;
 import com.sparta.openmind.dto.BoardResponseDto;
 import com.sparta.openmind.service.BoardService;
@@ -30,13 +31,9 @@ public class BoardController {
 
     // Get
     @GetMapping("/board/{bno}")
-    public ResponseEntity<List<BoardResponseDto>> getContentByBno(@PathVariable Integer bno){
-        Board board =  service.findContent(bno);
-        BoardResponseDto responseDto = new BoardResponseDto(board);
-        return BoardResponseDto;
-
-        return service.findContentandComment(bno);
-
+    public BoardResponseDto getContentByBno(@PathVariable Integer bno){
+        BoardResponseDto responseDto = service.findContentandComment(bno);
+        return responseDto;
     }
 
 
@@ -50,6 +47,7 @@ public class BoardController {
     @DeleteMapping("/board/{bno}")
     public String delete(@PathVariable Integer bno,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         service.deleteContent(bno,userDetails.getUser());
+        if ()
         return "삭제가 완료되었습니다.";
 
     }

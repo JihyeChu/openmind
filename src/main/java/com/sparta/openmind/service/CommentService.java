@@ -5,6 +5,7 @@ import com.sparta.openmind.dto.CommentResponseDto;
 import com.sparta.openmind.entity.Board;
 import com.sparta.openmind.entity.Comment;
 // import com.sparta.openmind.entity.User;
+import com.sparta.openmind.entity.User;
 import com.sparta.openmind.repository.CommentRepository;
 import com.sparta.openmind.dto.CommentResponseDto;
 import com.sparta.openmind.service.BoardService;
@@ -47,7 +48,7 @@ public class CommentService {
     // Delete
     @Transactional
     public void deleteComment(Integer cno, Integer bno, User user) {
-        String id = findComment(cno).getUser().getId();
+        String id = findComment(cno).getUser().getUsername();
         Board board = boardService.findContent(bno);
 
         if (id.equals(user.getId()) || user.getRole().toString().equals("ADMIN")) {
@@ -71,7 +72,7 @@ public class CommentService {
     @Transactional
     public CommentResponseDto updateCommnet(Integer cno, Integer bno, CommentRequestDto requestDto, User user) {
 
-        String id = findComment(cno).getUser().getId();
+        String id = findComment(cno).getUser().getUsername();
         Board board = boardService.findContent(bno);
         Comment comment = findComment(cno);
 
