@@ -9,15 +9,12 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/api")
 
 public class UserController {
@@ -31,7 +28,7 @@ public class UserController {
 
     @GetMapping("/user/login-page")
     public String loginPage() {
-        return "login"; // 로그인을 어디로 반환해야? 프론트가 없는데..
+        return "login";
     }
 
     @GetMapping("/user/signup")
@@ -39,8 +36,10 @@ public class UserController {
         return "signup";
     }
 
+    // postman 사용하려면 @RequestBody, @ResponseBody 필요
     @PostMapping("/user/signup")
-    public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
+    @ResponseBody
+    public String signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
         // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         if (fieldErrors.size() > 0) {

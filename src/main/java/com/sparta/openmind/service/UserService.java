@@ -1,29 +1,23 @@
 package com.sparta.openmind.service;
 
-import com.sparta.openmind.dto.LoginRequestDto;
 import com.sparta.openmind.dto.SignupRequestDto;
 import com.sparta.openmind.entity.User;
 import com.sparta.openmind.entity.UserRoleEnum;
 import com.sparta.openmind.jwt.JwtUtil;
 import com.sparta.openmind.repository.UserRepository;
-import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
 
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
@@ -42,14 +36,14 @@ public class UserService {
         //email 중복확인
         String email = requestDto.getEmail();
         Optional<User> checkEmail = userRepository.findByEmail(email);
-        if (checkEmail.isPresent()){
+        if (checkEmail.isPresent()) {
             throw new IllegalArgumentException("중복된 Email입니다.");
         }
 
         //사용자 role 확인
         UserRoleEnum role = UserRoleEnum.USER;
         if (requestDto.isAdmin()) {
-            if(!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
+            if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
                 throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
             }
             role = UserRoleEnum.ADMIN;
@@ -57,7 +51,7 @@ public class UserService {
 
         //사용자 등록
 
-        User user = new User(username, password, email,role);
+        User user = new User(username, password, email, role);
         userRepository.save(user);
     }
 
