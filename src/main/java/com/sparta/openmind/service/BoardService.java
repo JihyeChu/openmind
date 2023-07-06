@@ -7,9 +7,11 @@ import com.sparta.openmind.entity.User;
 import com.sparta.openmind.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +27,11 @@ public class BoardService {
         List<Board> boardList = boardRepository.findAllByUser(user);
         List<BoardResponseDto> responseDtoList = new ArrayList<>();
 
-        for (Board board : boardList){
+        for (Board board : boardList) {
             responseDtoList.add(new BoardResponseDto(board));
         }
         return responseDtoList;
     }
+
 }
+

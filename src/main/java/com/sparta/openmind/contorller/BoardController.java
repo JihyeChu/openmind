@@ -2,6 +2,7 @@ package com.sparta.openmind.contorller;
 
 import com.sparta.openmind.dto.BoardRequestDto;
 import com.sparta.openmind.dto.BoardResponseDto;
+import com.sparta.openmind.entity.Board;
 import com.sparta.openmind.entity.User;
 import com.sparta.openmind.security.UserDetailsImpl;
 import com.sparta.openmind.service.BoardService;
@@ -36,6 +37,12 @@ public class BoardController {
         System.out.println("user.getUsername() = " + user.getUsername());
         return boardService.getBoards(userDetails.getUser());
     }
+
+//    @PutMapping("/board/{id}")
+//    public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//    }
+
+
 //    @GetMapping("/board")
 //    public String getBoards(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 //        User user = userDetails.getUser();
