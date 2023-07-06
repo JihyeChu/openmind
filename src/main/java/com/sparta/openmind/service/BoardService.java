@@ -48,6 +48,7 @@ public class BoardService {
 
     @Transactional
     public BoardResponseDto writeContent(BoardRequestDto requestDto, User user) {
+
         Board board = repository.save(new Board(requestDto, user));
         return new BoardResponseDto(board);
     }
