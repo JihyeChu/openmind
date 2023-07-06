@@ -4,6 +4,7 @@ import com.sparta.openmind.dto.BoardRequestDto;
 import com.sparta.openmind.dto.BoardResponseDto;
 import com.sparta.openmind.entity.Board;
 import com.sparta.openmind.entity.User;
+import com.sparta.openmind.entity.UserRoleEnum;
 import com.sparta.openmind.repository.BoardRepository;
 import com.sparta.openmind.repository.CommentRepository;
 import com.sparta.openmind.dto.BoardResponseDto;
@@ -14,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -56,19 +59,18 @@ public class BoardService {
 
     @Transactional
     public void deleteContent(Integer bno, User user) {
-
         String id = findContent(bno).getUser().getUsername();
+        Board board = findContent(bno);
 
+        if (!(user.getRole().equals(UserRoleEnum.ADMIN) || id.equals(user.getUsername()))) {
+            throw new RejectedExecutionException();
+        } else
 
-        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
-            repository.deleteById(bno);
-        } else {
-            System.out.println("삭제할 권한이 없습니다.");
-        }
+        repository.delete(board);
     }
 
 
-    @Transactional
+    /*@Transactional
     public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {
 
         Board board = findContent(bno);
@@ -81,6 +83,31 @@ public class BoardService {
             System.out.println("수정할 권한이 없습니다.");
             return null;
         }
+    }*/
+
+    @Transactional
+    public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {
+        String id = findContent(bno).getUser().getUsername();
+        Board board = findContent(bno);
+
+        if (!(user.getRole().equals(UserRoleEnum.ADMIN) || id.equals(user.getUsername()))) {
+            throw new RejectedExecutionException();
+        }
+
+        board.setTitle(requestDto.getTitle());
+        board.setContent(requestDto.getContent());
+
+        return new BoardResponseDto(board);
+    }
+
+    public List<BoardResponseDto> getAllBoards() {
+        List<Board> boardList = repository.findAll();
+        List<BoardResponseDto> responseDtoList = new ArrayList<>();
+        for (Board board : boardList) {
+            responseDtoList.add(new BoardResponseDto(board));
+        }
+        return responseDtoList;
+
     }
 
 }
