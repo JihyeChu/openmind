@@ -1,12 +1,15 @@
 package com.sparta.openmind.controller;
 
-import com.sparta.openmind.dto.CommentRequestDto;
-import com.sparta.openmind.dto.CommentResponseDto;
+import com.sparta.openmind.dto.*;
 import com.sparta.openmind.security.UserDetailsImpl;
 import com.sparta.openmind.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.RejectedExecutionException;
 
 @RestController
 @RequestMapping(value="/api")
@@ -18,7 +21,7 @@ public class CommentController {
     private final CommentService service;
 
 
-    // Put Comment
+    // Post Comment
     @PostMapping(value="/comment")
     public CommentResponseDto write(@RequestBody CommentRequestDto requestDto, @RequestParam Integer bno, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return service.writeComment(requestDto,userDetails.getUser(),bno);
@@ -26,11 +29,15 @@ public class CommentController {
 
     // Delete Comment
     @DeleteMapping("/comment/{cno}")
-    public CommentResponseDto delete(@PathVariable Integer cno,@RequestParam Integer bno,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        System.out.println("삭제되었습니다.");
-        return service.deleteComment(cno,bno,userDetails.getUser());
-
+    public ResponseEntity<ApiResponseDto> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer cno, @RequestParam Integer bno) {
+        try {
+            service.deleteComment(cno, bno, userDetails.getUser());
+            return ResponseEntity.ok().body(new com.sparta.openmind.dto.ApiResponseDto("댓글이 삭제되었습니다.", HttpStatus.OK.value()));
+        } catch (RejectedExecutionException e) {
+            return ResponseEntity.badRequest().body(new com.sparta.openmind.dto.ApiResponseDto("작성자만 삭제할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+        }
     }
+
 
     // Put Comment
     @PutMapping("/comment/{cno}")

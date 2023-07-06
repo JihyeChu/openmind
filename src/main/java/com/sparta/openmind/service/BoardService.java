@@ -69,20 +69,6 @@ public class BoardService {
     }
 
 
-    /*@Transactional
-    public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {
-
-        Board board = findContent(bno);
-        String id = findContent(bno).getUser().getUsername();
-
-        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
-            board.update(requestDto);
-            return new BoardResponseDto(board);
-        } else {
-            System.out.println("수정할 권한이 없습니다.");
-            return null;
-        }
-    }*/
 
     @Transactional
     public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {

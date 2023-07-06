@@ -6,12 +6,14 @@ import com.sparta.openmind.entity.Board;
 import com.sparta.openmind.entity.Comment;
 // import com.sparta.openmind.entity.User;
 import com.sparta.openmind.entity.User;
+import com.sparta.openmind.entity.UserRoleEnum;
 import com.sparta.openmind.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -43,29 +45,27 @@ public class CommentService {
 
     }
 
-    // Delete
+    // Delete - Postman msg
     @Transactional
-    public CommentResponseDto deleteComment(Integer cno, Integer bno, User user) {
+    public void deleteComment(Integer cno, Integer bno, User user) {
         String id = findComment(cno).getUser().getUsername();
         Board board = boardService.findContent(bno);
 
-        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
+        if (!(user.getRole().equals(UserRoleEnum.ADMIN) || id.equals(user.getUsername()))) {
+            throw new RejectedExecutionException();
+        } else
+
             commentRepo.deleteById(cno);
+
             List<Comment> list = board.getCommentList();
 
 
             list.removeIf(c -> c.getCno() == cno);
 
             for (Comment c : list) {
-                System.out.println("Comment = " + c.getCno());
-            }
-        } else {
-            System.out.println("삭제 권한이 없습니다.");
+                 System.out.println("Comment = " + c.getCno());
         }
-
-        return null;
     }
-
 
 
 
