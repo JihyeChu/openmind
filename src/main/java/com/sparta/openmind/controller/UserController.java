@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
@@ -58,7 +58,7 @@ public class UserController {
     // 지혜님 PostMapping (html x)
     @PostMapping("/user/signup")
     @ResponseBody
-    public String signup( @Valid SignupRequestDto requestDto, BindingResult bindingResult) {
+    public String signup( @Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
     // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         if(fieldErrors.size() > 0) {
