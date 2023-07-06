@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value="/api")
 @RequiredArgsConstructor
 
 public class CommentController {
@@ -19,7 +19,7 @@ public class CommentController {
 
 
     // Put Comment
-    @PostMapping("/comment")
+    @PostMapping(value="/comment")
     public CommentResponseDto write(@RequestBody CommentRequestDto requestDto, @RequestParam Integer bno, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return service.writeComment(requestDto,userDetails.getUser(),bno);
     }

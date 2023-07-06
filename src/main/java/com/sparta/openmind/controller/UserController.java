@@ -1,5 +1,6 @@
 package com.sparta.openmind.controller;
 
+import com.sparta.openmind.dto.LoginRequestDto;
 import com.sparta.openmind.dto.SignupRequestDto;
 import com.sparta.openmind.dto.UserInfoDto;
 import com.sparta.openmind.entity.UserRoleEnum;
@@ -34,6 +35,7 @@ public class UserController {
     public String signupPage() {
         return "signup";
     }
+
     //회원가입구현
     /*@PostMapping("/user/signup")
     @ResponseBody
@@ -56,17 +58,18 @@ public class UserController {
     // 지혜님 PostMapping (html x)
     @PostMapping("/user/signup")
     @ResponseBody
-    public void signup( @Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
+    public String signup( @Valid SignupRequestDto requestDto, BindingResult bindingResult) {
     // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         if(fieldErrors.size() > 0) {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }
-            return;
+            return "redirect:/api/user/signup";
         }
 
         userService.signup(requestDto);
+        return "redirect:/api/user/login-page";
     }
 
 

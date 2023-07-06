@@ -20,7 +20,6 @@ import java.util.List;
 public class Board extends com.sparta.openmind.entity.Timestamped {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Id
     private int bno;
 

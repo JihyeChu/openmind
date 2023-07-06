@@ -6,6 +6,7 @@ import com.sparta.openmind.entity.Board;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -19,7 +20,7 @@ public class BoardResponseDto {
     private String writer;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private List<Comment> commentList;
+    private List<CommentResponseDto> commentList;
 
     public BoardResponseDto(Board board) {
         this.bno = board.getBno();
@@ -28,7 +29,10 @@ public class BoardResponseDto {
         this.writer = board.getUser().getUsername();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
-        this.commentList = board.getCommentList();
+        this.commentList = board.getCommentList().stream()
+                .map(CommentResponseDto::new)
+                .sorted(Comparator.comparing(CommentResponseDto::getCreatedAt).reversed()) // 작성날짜 내림차순
+                .toList();
     }
 
     public BoardResponseDto(Board board,List<Comment> commentList) {
@@ -38,6 +42,6 @@ public class BoardResponseDto {
         this.writer = board.getUser().getUsername();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
-        this.commentList = commentList;
+        //this.commentList = commentList;
     }
 }

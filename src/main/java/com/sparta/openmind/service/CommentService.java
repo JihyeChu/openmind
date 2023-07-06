@@ -6,6 +6,7 @@ import com.sparta.openmind.entity.Board;
 import com.sparta.openmind.entity.Comment;
 // import com.sparta.openmind.entity.User;
 import com.sparta.openmind.entity.User;
+import com.sparta.openmind.entity.UserRoleEnum;
 import com.sparta.openmind.repository.CommentRepository;
 import com.sparta.openmind.dto.CommentResponseDto;
 import com.sparta.openmind.service.BoardService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +53,7 @@ public class CommentService {
         String id = findComment(cno).getUser().getUsername();
         Board board = boardService.findContent(bno);
 
-        if (id.equals(user.getId()) || user.getRole().toString().equals("ADMIN")) {
+        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
             commentRepo.deleteById(cno);
             List<Comment> list = board.getCommentList();
 
@@ -67,6 +69,8 @@ public class CommentService {
 
 
     }
+
+
 
 
     @Transactional
@@ -96,5 +100,6 @@ public class CommentService {
         return commentRepo.findById(cno).orElseThrow(() ->
                 new IllegalArgumentException("해당 메모가 존재하지 않습니다."));
     }
+
 
 }
