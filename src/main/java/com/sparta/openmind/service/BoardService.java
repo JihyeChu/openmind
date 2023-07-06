@@ -69,7 +69,7 @@ public class BoardService {
     }
 
 
-    @Transactional
+    /*@Transactional
     public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {
 
         Board board = findContent(bno);
@@ -82,6 +82,21 @@ public class BoardService {
             System.out.println("수정할 권한이 없습니다.");
             return null;
         }
+    }*/
+
+    @Transactional
+    public BoardResponseDto updateContent(Integer bno, BoardRequestDto requestDto, User user) {
+        String id = findContent(bno).getUser().getUsername();
+        Board board = findContent(bno);
+
+        if (!(user.getRole().equals(UserRoleEnum.ADMIN) || id.equals(user.getUsername()))) {
+            throw new RejectedExecutionException();
+        }
+
+        board.setTitle(requestDto.getTitle());
+        board.setContent(requestDto.getContent());
+
+        return new BoardResponseDto(board);
     }
 
     public List<BoardResponseDto> getAllBoards() {
