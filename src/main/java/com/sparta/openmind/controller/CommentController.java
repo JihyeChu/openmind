@@ -26,16 +26,16 @@ public class CommentController {
 
     // Delete Comment
     @DeleteMapping("/comment/{cno}")
-    public String delete(@PathVariable Integer cno,@RequestParam Integer bno,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        service.deleteComment(cno,bno,userDetails.getUser());
-        return "삭제가 완료되었습니다.";
+    public CommentResponseDto delete(@PathVariable Integer cno,@RequestParam Integer bno,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println("삭제되었습니다.");
+        return service.deleteComment(cno,bno,userDetails.getUser());
 
     }
 
     // Put Comment
     @PutMapping("/comment/{cno}")
     public CommentResponseDto update(@PathVariable Integer cno,@RequestParam Integer bno, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return service.updateCommnet(cno,bno,requestDto,userDetails.getUser());
+        return service.updateComment(cno,bno,requestDto,userDetails.getUser());
     }
 
 }

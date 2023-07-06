@@ -49,7 +49,7 @@ public class CommentService {
 
     // Delete
     @Transactional
-    public void deleteComment(Integer cno, Integer bno, User user) {
+    public CommentResponseDto deleteComment(Integer cno, Integer bno, User user) {
         String id = findComment(cno).getUser().getUsername();
         Board board = boardService.findContent(bno);
 
@@ -67,21 +67,21 @@ public class CommentService {
             System.out.println("삭제 권한이 없습니다.");
         }
 
-
+        return null;
     }
 
 
 
 
     @Transactional
-    public CommentResponseDto updateCommnet(Integer cno, Integer bno, CommentRequestDto requestDto, User user) {
+    public CommentResponseDto updateComment(Integer cno, Integer bno, CommentRequestDto requestDto, User user) {
 
         String id = findComment(cno).getUser().getUsername();
         Board board = boardService.findContent(bno);
         Comment comment = findComment(cno);
 
 
-        if (id.equals(user.getId()) || user.getRole().toString().equals("ADMIN")) {
+        if (id.equals(user.getUsername()) || user.getRole().toString().equals("ADMIN")) {
             List<Comment> list = board.getCommentList();
             comment.update(requestDto);
 
