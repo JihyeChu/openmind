@@ -28,48 +28,25 @@ public class UserController {
 
     @GetMapping("/user/login-page")
     public String loginPage() {
-        return "login";
+        return "회원정보가 중복되었습니다.";
     }
-
-    @GetMapping("/user/signup")
-    public String signupPage() {
-        return "signup";
-    }
-
-    //회원가입구현
-    /*@PostMapping("/user/signup")
-    @ResponseBody
-    public String signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
-        // Validation 예외처리
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if(fieldErrors.size() > 0) {
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
-            }
-            return "redirect:/api/user/signup";
-        }
-
-        userService.signup(requestDto);
-
-        return userService.signup(requestDto);
-    }*/
 
 
     // 지혜님 PostMapping (html x)
     @PostMapping("/user/signup")
-    @ResponseBody
-    public String signup( @Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
+    //@ResponseBody
+    public String signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
     // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         if(fieldErrors.size() > 0) {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }
-            return "redirect:/api/user/signup";
+            return "회원가입이 실패하였습니다.";
         }
 
         userService.signup(requestDto);
-        return "redirect:/api/user/login-page";
+        return "회원가입이 성공하였습니다.";
     }
 
 
