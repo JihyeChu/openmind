@@ -65,7 +65,7 @@ public class BoardService {
             throw new RejectedExecutionException();
         } else
 
-        repository.delete(board);
+    repository.delete(board);
     }
 
 
